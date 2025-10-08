@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <sys/wait.h>
-#define N 50000
+#include <time.h>
+#define N 5000
 
 double f(int x, int y) {
     return x * x * x * sin((double)x) - y * y * y * cos((double)y) + x * y * y;
@@ -14,6 +15,7 @@ int main(void) {
     double maxp = 0, maxf = 0;
     int x_maxp = 0, y_maxp = 0, x_maxf = 0, y_maxf = 0;
 
+    clock_t start = clock();
     int k = fork();
     if (k > 0) {
         for (int x = 0; x <= N; x += 2) {
@@ -44,9 +46,11 @@ int main(void) {
         printf("fin fils\n");
         exit(0);
     }
+    clock_t end = clock();
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
 
     if (maxp > maxf)
-        printf("pere %f, fils %f: le max est atteint en (x=%d, y=%d) et vaut %f\n", maxp, maxf, x_maxp, y_maxp, maxp);
+        printf("pere %f, fils %f: le max est atteint en (x=%d, y=%d) et vaut %f en %f\n", maxp, maxf, x_maxp, y_maxp, maxp,time_spent);
     else
-        printf("fils %f, pere %f: le max est atteint en (x=%d, y=%d) et vaut %f\n", maxf, maxp, x_maxf, y_maxf, maxf);
+        printf("fils %f, pere %f: le max est atteint en (x=%d, y=%d) et vaut %f en %f\n", maxf, maxp, x_maxf, y_maxf, maxf,time_spent);
 }
