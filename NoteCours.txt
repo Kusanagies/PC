@@ -1,0 +1,13 @@
+Cours après le Controle un peu suprise
+
+Stock <- Init(k) //K = Capacité
+^   ^
+|   | 
+Demande(n) )- Potentiellement Bloquand (Ex: Demande 15 exmeplaire alors qu'il y en a que 5)
+    |
+    Rendre(n)
+
+Pour 10 threads avec K = 100, thread i demande i*10 ressources, attends 10ms,rend les ressources   
+                                                                    ^
+                                                                    | 
+                                                                    Affiche un message
